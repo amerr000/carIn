@@ -7,12 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Booking extends Model
 {
-    public function usersBooking()
-    {
-        return $this->belongsToMany(User::class, 'booking_user_car', 'booking_id', 'user_id')
-                    ->withPivot(['car_id', 'status'])
-                    ->withTimestamps();
-    }
+    
 
     public function bookedCars()
     {

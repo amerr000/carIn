@@ -66,18 +66,6 @@ class User extends Authenticatable
         return $this->hasMany(Car::class);
     }
 
-public function bookedCars()
-{
-    return $this->belongsToMany(Car::class, 'booking_user_car', 'user_id', 'car_id')
-                ->withPivot(['booking_id', 'status'])
-                ->withTimestamps();
-}
 
-public function bookings()
-{
-    return $this->belongsToMany(Booking::class, 'booking_user_car', 'user_id', 'booking_id')
-                ->withPivot(['car_id', 'status'])
-                ->withTimestamps();
-}
 
 }

@@ -17,15 +17,6 @@ class Car extends Model
         return $this->hasMany(Image::class);
     }
 
-    
-
-    public function usersBooking()
-    {
-        return $this->belongsToMany(User::class, 'booking_user_car', 'car_id', 'user_id')
-                    ->withPivot(['booking_id', 'status'])
-                    ->withTimestamps();
-    }
-
     public function bookedCars()
     {
         return $this->belongsToMany(Booking::class, 'booking_user_car', 'car_id', 'booking_id')
