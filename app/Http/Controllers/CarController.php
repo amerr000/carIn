@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Car;
+
+class CarController extends Controller
+{
+    public function index(Request $request){
+        $cars=Car::all();
+        return response()->json([
+            'message'=>"success",
+            'cars'=>$cars
+        ]);
+    }
+
+
+    public function store(Request $request){
+
+        $validatedData=$request->validate([
+            "longitude"=>"required|numeric|max:255",
+            "latitude"=>"required|numeric|max:255",
+            "available"=>"required|boolean",
+            "brand"=>"required|string|max:255",
+            "model_name"=>"required|string|max:255",
+            "year"=>"required|numeric",
+            "color"=>"required|string",
+            "milage"=>"required|numeric",
+            "images"=>"required",
+            "images.*"=>"mimes:jpeg,png,jpg,gif|max:2048"
+        ]);
+
+        $user=Auth::user();
+        $userId=$user->id;
+
+        $location=Location::where('user_id',$userId)
+                            ->where("longitude",$validatedData['longitude'])
+                            ->where("latitude",$validatedData['latitude'])
+                            ->first();
+            $locationId=null;
+
+            if(!$location){
+                //then the location doesnt exist we need to add it 
+               $newLocation= Location::create([
+                    "longitude"=>$validatedData['longitude'],
+                    "latitude"=>$validatedData['latitude'],
+                    "user_id"=>$userId
+                ]);
+                $locationId=$newLocation->id;
+
+            }
+            else{
+                // the location exist we need to get its id
+                $locationId=$location->id;
+            }
+
+           $newCar = Car::create([
+            "available"=>$validatedData['available'],
+            "brand"=>$validatedData['brand'],
+            "model_name"=>$validatedData['model_name'],
+            "year"=>$validatedData['year'],
+            "color"=>$validatedData['color'],
+            "milage"=>$validatedData['milage'],
+            "location_id"=>$locationId,
+            "user_id"=>$userId
+           ]);
+
+           $carId=$newCar->id;
+
+           //now here we create the images and assign each images to this carId and optionally search what is db transaction
+           // and implement it here  
+    }
+
+
+
+
+
+
+}
