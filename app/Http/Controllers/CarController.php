@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Location;
+use App\Models\Image;
+
 
 class CarController extends Controller
 {
@@ -19,9 +23,9 @@ class CarController extends Controller
     public function store(Request $request){
 
         $validatedData=$request->validate([
-            "longitude"=>"required|numeric|max:255",
-            "latitude"=>"required|numeric|max:255",
-            "available"=>"required|boolean",
+            "longitude"=>"required|numeric",
+            "latitude"=>"required|numeric",
+            "available"=>"required|string",
             "brand"=>"required|string|max:255",
             "model_name"=>"required|string|max:255",
             "year"=>"required|numeric",
@@ -33,6 +37,7 @@ class CarController extends Controller
 
         $user=Auth::user();
         $userId=$user->id;
+        
 
         $location=Location::where('user_id',$userId)
                             ->where("longitude",$validatedData['longitude'])
@@ -68,8 +73,28 @@ class CarController extends Controller
 
            $carId=$newCar->id;
 
-           //now here we create the images and assign each images to this carId and optionally search what is db transaction
-           // and implement it here  
+
+
+
+          if($request->hasFile('images')){
+           foreach ($request->file('images') as $image) {
+                $path = $image->store('images','public');
+                Image::create([
+                    "url_path"=>$path,
+                    "car_id"=>$carId
+                ]);
+            }
+               
+
+
+
+    }
+
+     return response()->json([
+                    "message"=>"Ad Created successfuly"
+                ]);
+
+            
     }
 
 

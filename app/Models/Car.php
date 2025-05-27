@@ -9,6 +9,17 @@ use App\Models\Booking;
 
 class Car extends Model
 {
+    protected $fillable=[
+         "available",
+            "brand",
+            "model_name",
+            "year",
+            "color",
+            "milage",
+            "location_id",
+            "user_id"
+
+    ];
     public function user(){
         return $this->belongsTo(User::class);
     }
