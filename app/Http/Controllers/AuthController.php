@@ -54,7 +54,7 @@ public function login(Request $request)
     $token = $user->createToken('api-token')->plainTextToken;
 
     return response()->json([
-        'message' => "user created successfuly",
+        'message' => "user logged In successfully",
         'token' => $token
     ]);
 }
