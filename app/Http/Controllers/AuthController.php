@@ -37,6 +37,7 @@ public function signup(Request $request)
         "message"=>"user created successfully",
         "user"=> $user
         ]
+        
     
     );
 }
