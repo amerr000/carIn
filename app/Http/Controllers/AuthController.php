@@ -36,10 +36,7 @@ public function signup(Request $request)
     return response()->json([
         "message"=>"user created successfully",
         "user"=> $user
-        ]
-        
-    
-    );
+        ]);
 }
 
 
@@ -60,11 +57,7 @@ public function login(Request $request)
     $token = $user->createToken('api-token')->plainTextToken;
 
     return response()->json([
-<<<<<<< HEAD
-        'message' => "user logged in successfully",
-=======
         'message' => "user logged In successfully",
->>>>>>> 32267e6ed51c145e8473ed61904ee0e6bc5fc7d4
         'token' => $token
     ]);
 }
