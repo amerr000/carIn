@@ -13,12 +13,14 @@ class CarController extends Controller
 {
     public function index(Request $request){
        $cars = Car::all();
-    $carsNew['cars'] = []; // Initialize as empty array
+        $carsNew['cars'] = []; // Initialize as empty array
 
-    foreach ($cars as $car) {
-        $images=$car->images;
-        $carsNew['cars'][] = ['car' => $car]; // Append each car
+        foreach ($cars as $car) {
+            $images=$car->images;
+            $carsNew['cars'][] = ['car' => $car]; // Append each car
     }
+        return response()->json($carsNew); // Return as JSON response
+
     }
 
 
