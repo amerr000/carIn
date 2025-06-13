@@ -95,6 +95,7 @@ class CarController extends Controller
      return response()->json([
                     "message"=>"Car Created successfuly",
                     "car"=>$newCar,
+                    "images"=>$newCar->images
                     
                 ]);
 
