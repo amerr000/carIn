@@ -31,7 +31,6 @@ class Car extends Model
     public function bookedCars()
     {
         return $this->belongsToMany(Booking::class)
-                    ->withPivot(['status'])
                     ->withTimestamps();
     }
 }

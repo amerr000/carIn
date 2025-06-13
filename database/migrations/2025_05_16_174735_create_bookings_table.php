@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->boolean('is_available');
+            $table->date('available_from');
             $table->boolean('paid');
             $table->timestamps();
         });

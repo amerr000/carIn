@@ -12,11 +12,13 @@ use App\Models\Image;
 class CarController extends Controller
 {
     public function index(Request $request){
-        $cars=Car::all();
-        return response()->json([
-            'message'=>"success",
-            'cars'=>$cars
-        ]);
+       $cars = Car::all();
+    $carsNew['cars'] = []; // Initialize as empty array
+
+    foreach ($cars as $car) {
+        $images=$car->images;
+        $carsNew['cars'][] = ['car' => $car]; // Append each car
+    }
     }
 
 
@@ -91,7 +93,9 @@ class CarController extends Controller
     }
 
      return response()->json([
-                    "message"=>"Ad Created successfuly"
+                    "message"=>"Car Created successfuly",
+                    "car"=>$newCar,
+                    
                 ]);
 
             
